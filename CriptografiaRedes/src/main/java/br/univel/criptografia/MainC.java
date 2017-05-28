@@ -7,6 +7,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +25,9 @@ public class MainC extends JFrame {
 	private JButton btnDescriptografar;
 	private JButton btnLimpar;
 	private String conteudoCriptografar;
+	private String conteudoCriptografado;
+	private String conteudoDescriptografar;
+	private String conteudoDescriptografado;
 
 	public MainC() {
 		super("Criptografia Redes");
@@ -70,13 +75,16 @@ public class MainC extends JFrame {
 		panelCriptografia.add(tfCriptografar, gbc_tfCriptografar);
 		tfCriptografar.setColumns(10);
 
+		final ArrayList<String> lista = montaListaCaracter();
+
 		btnCriptografar = new JButton("   Criptografar    ");
 		btnCriptografar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnCriptografar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				conteudoCriptografar = tfCriptografar.getText().trim();
 				btnDescriptografar.setEnabled(true);
-				tfDescriptografar.setText(conteudoCriptografar);
+				conteudoCriptografado = Criptografia.criptografar(conteudoCriptografar, lista);
+				tfDescriptografar.setText(conteudoCriptografado);
 				tfCriptografar.setText("");
 			}
 		});
@@ -112,7 +120,10 @@ public class MainC extends JFrame {
 		btnDescriptografar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnDescriptografar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				conteudoDescriptografar = tfDescriptografar.getText().trim();
+				conteudoDescriptografado = Criptografia.descriptografar(conteudoDescriptografar, lista);
+				tfCriptografar.setText(conteudoDescriptografado);
+				tfDescriptografar.setText("");
 			}
 		});
 		GridBagConstraints gbc_btnDescriptografar = new GridBagConstraints();
@@ -142,7 +153,19 @@ public class MainC extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		montaListaCaracter();
 		new MainC().setVisible(true);
+	}
+
+	public static ArrayList<String> montaListaCaracter() {
+		ArrayList<String> lista = new ArrayList<String>();
+
+		for (int i = 0; i <= 401; i++) {
+			lista.add(String.valueOf((char) i));
+		}
+
+		Collections.shuffle(lista);
+		return lista;
 	}
 
 }
