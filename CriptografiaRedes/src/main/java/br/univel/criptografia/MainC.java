@@ -112,7 +112,7 @@ public class MainC extends JFrame {
 		btnDescriptografar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnDescriptografar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// batata
+				
 			}
 		});
 		GridBagConstraints gbc_btnDescriptografar = new GridBagConstraints();
